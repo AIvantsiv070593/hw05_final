@@ -134,19 +134,17 @@ dmypy.json
 .AppleDouble
 .LSOverride
 
+
 *.sublime-project
 *.sublime-workspace
 
 .vscode/
 *.code-workspace
+static/
+media/
+posts/static/
 
 # Local History for Visual Studio Code
 .history/
 
 .mypy_cache
-
-# папки со статикой и медиа
-static/
-posts/static/
-media/
-

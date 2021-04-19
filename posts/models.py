@@ -22,12 +22,18 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Текст',
                             help_text='Напишите что нибудь')
     pub_date = models.DateTimeField('date published',
-                                    auto_now_add=True, db_index=True)
+                                    auto_now_add=True,
+                                    db_index=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, models.SET_NULL, blank=True,
-                              null=True, verbose_name='Группа',
+    group = models.ForeignKey(Group, models.SET_NULL,
+                              blank=True,
+                              null=True,
+                              verbose_name='Группа',
                               help_text='Выберите группу')
-    image = models.ImageField(upload_to='posts/', blank=True, null=True)
+    image = models.ImageField(upload_to='posts/',
+                              blank=True,
+                              null=True,
+                              help_text='Добавте картинку')
 
     class Meta:
         verbose_name = 'AuthorPost'
@@ -46,7 +52,8 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='Комментарий',
                             help_text='Оставь комментарий')
     created = models.DateTimeField('date created',
-                                   auto_now_add=True, db_index=True)
+                                   auto_now_add=True,
+                                   db_index=True)
 
     class Meta:
         verbose_name = 'CommentPost'

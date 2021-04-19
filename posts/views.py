@@ -48,8 +48,6 @@ def profile(request, username):
     paginator = Paginator(posts, paginator_count)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    follower_count = username.follower.count()
-    following_count = username.following.count()
     if request.user.is_authenticated:
         following_flag = Follow.objects.filter(user=request.user,
                                                author=username).exists()
@@ -57,8 +55,6 @@ def profile(request, username):
                   {'username': username,
                    'posts_count': posts_count,
                    'page': page,
-                   'follower': follower_count,
-                   'following': following_count,
                    'following_flag': following_flag})
 
 
@@ -72,8 +68,6 @@ def post_view(request, username, post_id):
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     form = CommentForm(request.POST or None)
-    follower_count = username.follower.count()
-    following_count = username.following.count()
     if request.user.is_authenticated:
         following_flag = Follow.objects.filter(user=request.user,
                                                author=username).exists()
@@ -84,8 +78,6 @@ def post_view(request, username, post_id):
                    'page': page,
                    'form': form,
                    'comment_context': comments,
-                   'follower': follower_count,
-                   'following': following_count,
                    'following_flag': following_flag})
 
 
@@ -145,7 +137,7 @@ def profile_follow(request, username):
     author = User.objects.get(username=username)
     if not Follow.objects.filter(user=request.user, author=author).exists():
         if request.user != author:
-            Follow.objects.create(user=request.user, author=author)
+            Follow.objects.get_or_create(user=request.user, author=author)
         return redirect('profile', username)
     return redirect('profile', username)
 

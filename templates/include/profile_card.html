@@ -11,8 +11,8 @@
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                                 <div class="h6 text-muted">
-                                Подписчиков: {{ following }} <br />
-                                Подписан: {{ follower }}
+                                Подписчиков: {{ username.following.count }} <br />
+                                Подписан: {{ username.follower.count }}
                                 </div>
                         </li>
                         <li class="list-group-item">
@@ -24,7 +24,7 @@
                 </ul>
 </div>
 {% if user != username %}
-{% if following_flag == 'NoneUser' %}
+{% if following_flag != 'NoneUser' %}
 <li class="list-group-item">
         {% if following_flag %}
         <a class="btn btn-lg btn-light" 

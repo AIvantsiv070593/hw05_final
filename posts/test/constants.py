@@ -6,6 +6,7 @@ another_username = 'AnotherUserTest'
 text = 'TestText'
 new_text = 'NewTestText'
 image_name = 'testImage.png'
+image_name_crash = 'testImage2.png'
 
 # for Group
 group_name = 'TestGroup'
@@ -28,3 +29,5 @@ group_model = 'Группа'
 # fro model field_help_texts
 help_text = 'Напишите что нибудь'
 help_group = 'Выберите группу'
+help_image = 'Добавте картинку'
+help_comment = 'Оставь комментарий'

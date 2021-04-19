@@ -73,7 +73,7 @@ class PostCreateFormTests(TestCase):
                 author=self.user,
                 text=con.text,
                 group=self.group.id,
-                image='posts/testImage.png'
+                image='posts/' + con.image_name
             ).exists()
         )
 
@@ -103,6 +103,39 @@ class PostCreateFormTests(TestCase):
             ).exists()
         )
 
+    def test_NOTcreate_post_with_nonpic(self):
+        """Не валидная форма не создает запись в Post."""
+        posts_count = Post.objects.count()
+        small_gif = ('\x47\x49\x46\x38\x39\x61\x01\x00')
+        try:
+            uploaded = SimpleUploadedFile(
+                name=con.image_name_crash,
+                content=small_gif,
+                content_type='image/gif'
+            )
+            form_data = {
+                'author': self.user,
+                'text': con.text,
+                'group': self.group.id,
+                'image': uploaded
+            }
+            response = self.authorized_client.post(
+                con.new_post,
+                data=form_data,
+                follow=True
+            )
+            self.assertEqual(response.status_code, 300)
+        except TypeError:
+            self.assertEqual(Post.objects.count(), posts_count)
+            self.assertFalse(
+                Post.objects.filter(
+                    author=self.user,
+                    text=con.text,
+                    group=self.group.id,
+                    image='posts/' + con.image_name_crash
+                ).exists()
+            )
+
 
 class CommentTest(TestCase):
     """Проверка работы комментариев."""
@@ -124,7 +157,7 @@ class CommentTest(TestCase):
         cls.form_data = {
             'text': con.new_text,
         }
-        cls.part_url = f'?next=/{con.another_username}/{cls.post.id}/comment'
+        cls.part_url = f'?next=/{con.another_username}/{cls.post.id}/comment/'
         cls.REDIRECT_login_URL = reverse('login') + cls.part_url
 
     def test_add_comment_auth_user(self):

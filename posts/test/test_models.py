@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 
 from posts.models import Comment, Group, Post
+
 from . import constants as con
 
 User = get_user_model()
@@ -85,6 +86,6 @@ class CommentTest(TestCase):
                     self.comment._meta.get_field(value).help_text, expected)
 
     def test_len_post_text(self):
-        """Проверка длины вовода текста поста."""
+        """Проверка длины вовода текста комментария."""
         expected_text = self.comment.text[:10]
         self.assertEquals(expected_text, str(self.comment))

@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+
 from yatube.settings import paginator_count
+
 from .forms import CommentForm, PostForm
 from .models import Follow, Group, Post
 
@@ -44,7 +46,6 @@ def profile(request, username):
     following_flag = 'NoneUser'
     username = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=username)
-    posts_count = Post.objects.filter(author=username).count()
     paginator = Paginator(posts, paginator_count)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -53,7 +54,6 @@ def profile(request, username):
                                                author=username).exists()
     return render(request, 'profile.html',
                   {'username': username,
-                   'posts_count': posts_count,
                    'page': page,
                    'following_flag': following_flag})
 
@@ -62,9 +62,8 @@ def post_view(request, username, post_id):
     following_flag = 'NoneUser'
     username = get_object_or_404(User, username=username)
     post = Post.objects.get(id=post_id)
-    posts_count = Post.objects.filter(author=username).count()
     comments = post.comments.all()
-    paginator = Paginator(comments, 4)
+    paginator = Paginator(comments, 2)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     form = CommentForm(request.POST or None)
@@ -74,10 +73,8 @@ def post_view(request, username, post_id):
     return render(request, 'post.html',
                   {'username': username,
                    'post': post,
-                   'posts_count': posts_count,
                    'page': page,
                    'form': form,
-                   'comment_context': comments,
                    'following_flag': following_flag})
 
 

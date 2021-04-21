@@ -3,14 +3,16 @@ import tempfile
 
 from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
-from yatube.settings import paginator_count
+
 from posts.models import Group, Post
+from yatube.settings import paginator_count
+
 from . import constants as con
 
 User = get_user_model()

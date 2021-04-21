@@ -69,3 +69,6 @@ class Follow(models.Model):
                              related_name='follower')
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='following')
+
+    def __str__(self):
+        return f'Подписок {self.user.count()}, Подписок {self.author.count()}'

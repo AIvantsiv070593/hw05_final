@@ -75,6 +75,7 @@ def post_view(request, username, post_id):
                    'post': post,
                    'page': page,
                    'form': form,
+                   'comment_context': comments,
                    'following_flag': following_flag})
 
 

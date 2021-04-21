@@ -54,7 +54,6 @@ class PostPagesTests(TestCase):
             group=cls.group,
             image=uploaded
         )
-        cls.post_count = Post.objects.filter(author=cls.user)
 
     @classmethod
     def tearDownClass(cls):
@@ -110,8 +109,6 @@ class PostPagesTests(TestCase):
         """Шаблон profile сформирован с правильным контекстом."""
         response = self.authorized_client.get(con.user_page)
         self.assertEqual(response.context['username'], self.user)
-        self.assertEqual(response.context['posts_count'],
-                         self.post_count.count())
         for post in response.context['page']:
             self.assertEqual(post.text, self.post.text)
             self.assertEqual(post.author, self.post.author)
@@ -125,8 +122,6 @@ class PostPagesTests(TestCase):
                                                       'post_id':
                                                       self.post.id}))
         self.assertEqual(response.context['username'], self.user)
-        self.assertEqual(response.context['posts_count'],
-                         self.post_count.count())
         self.assertEqual(response.context['post'], self.post)
         self.assertEqual(response.context['post'].image, image_path)
 

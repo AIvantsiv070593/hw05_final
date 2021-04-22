@@ -6,7 +6,7 @@
 <main role="main" class="container">
     <div class="row">
             <div class="col-md-3 mb-3 mt-1">
-                {% include "include/profile_card.html" with comment_count=page.paginator.count profile_user=username%}
+                {% include "include/profile_card.html" with comment_count=page.paginator.count profile_user=post.author%}
         </div>
 
         <div class="col-md-9">

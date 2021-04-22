@@ -60,7 +60,6 @@ def profile(request, username):
 
 def post_view(request, username, post_id):
     following_flag = 'NoneUser'
-    username = get_object_or_404(User, username=username)
     post = Post.objects.get(id=post_id)
     comments = post.comments.all()
     paginator = Paginator(comments, 2)
@@ -69,10 +68,9 @@ def post_view(request, username, post_id):
     form = CommentForm(request.POST or None)
     if request.user.is_authenticated:
         following_flag = Follow.objects.filter(user=request.user,
-                                               author=username).exists()
+                                               author=post.author).exists()
     return render(request, 'post.html',
-                  {'username': username,
-                   'post': post,
+                  {'post': post,
                    'page': page,
                    'form': form,
                    'comment_context': comments,

@@ -121,7 +121,6 @@ class PostPagesTests(TestCase):
                                                       self.user.username,
                                                       'post_id':
                                                       self.post.id}))
-        self.assertEqual(response.context['username'], self.user)
         self.assertEqual(response.context['post'], self.post)
         self.assertEqual(response.context['post'].image, image_path)
 

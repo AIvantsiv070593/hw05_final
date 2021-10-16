@@ -71,4 +71,5 @@ class Follow(models.Model):
                                related_name='following')
 
     def __str__(self):
-        return f'Подписок {self.user.count()}, Подписок {self.author.count()}'
+        return f'Подписок {self.user.count()},'
+        f'Подписавшихся {self.author.count()}'
